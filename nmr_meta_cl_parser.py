@@ -27,5 +27,8 @@ class Nmr_meta_cl_parser(BaseParser):
         self.parser.add_argument("--nmr-data-local-folder", type=str, required=False, default=os.getcwd(),
                                  help='Local path to the folder with the organized nmr data')
 
+        self.parser.add_argument("--nmr-csv-name", type=str, required=False, default='nmr_metadata.csv',
+                                 help='File name of the summary CSV with metadta')
+
         self.parser.add_argument("--nmr-data-rdms-folder", type=str, required=False,
                                  help='Path on the rdms with the organized nmr data')

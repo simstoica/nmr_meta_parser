@@ -30,7 +30,7 @@ pip install -r requirements.txt
 
 ```
 python3 nmr_meta_main.py --help 
-python3 nmr_meta_main.py --nmr-data-local-folder=./data 
+python3 nmr_meta_main.py --nmr-data-local-folder=./data --nmr-csv-name=./data/nmr_metadata.csv 
 
 ```
 
