@@ -1,0 +1,5 @@
+/data/**
+/NMR_Formats/**
+NMR_Metadata.docx
+NMR_Metadata.pdf
+*.pyc
