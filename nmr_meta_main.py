@@ -1,5 +1,8 @@
 import os
+import csv
 
+
+import nmr_parser
 from nmr_meta_cl_parser import Nmr_meta_cl_parser
 
 
@@ -26,33 +29,30 @@ if __name__ == "__main__":
     # Expermiment discovery
     experiment_folders = get_all_experiment_folders(p.opt.nmr_data_local_folder)
     print(len(experiment_folders))
-    
+
     # Parsing
-    import nmr_parser
+
     csv_rows = []
     for experiment in experiment_folders:
         metadata = nmr_parser.parse(experiment)
         metadata['Experiment'] = str(experiment)
         csv_rows.append(metadata)
-        
-        
-    import csv
 
     # csv header
     fieldnames = [
-        'Experiment', 
+        'Experiment',
         'Email',
         'Requester',
         'Gnumber',
         'Manufacturer',
-        'Machine', 
+        'Machine',
         'Date',
         'Experiment Type_explist',
         'Experiment Type_seqfil',
         'Experiment Type_explabel',
         'Solvent',
         'Nucleus_1',
-        'Nucleus_2', 
+        'Nucleus_2',
         'Frequency_1',
         'Frequency_2',
         'Number of scans',
@@ -60,7 +60,7 @@ if __name__ == "__main__":
     ]
 
     # csv data
-    with open('metadata_nmr.csv', 'w', encoding='UTF8', newline='') as f:
+    with open(p.opt.nmr_csv_name, 'w', encoding='UTF8', newline='') as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
-        writer.writerows(csv_rows)    
+        writer.writerows(csv_rows)
