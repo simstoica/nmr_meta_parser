@@ -1,3 +1,4 @@
+from datetime import datetime
 import nmrglue as ng
 import os
 
@@ -13,13 +14,15 @@ def parse_params(experiment_folder):
     try:
         procparams = ng.fileio.varian.read_procpar(proc_file_name)
 
+        
+        date_exp = datetime.strptime(procparams['time_complete']['values'][0],'%Y%m%dT%H%M%S')
         return {
             'Email': get_email(experiment_folder),
             'Requester': get_requester_email(experiment_folder),
             'Gnumber': get_gnumber(experiment_folder),
             "Manufacturer": 'Varian',
             "Machine": procparams['console']['values'][0],
-            "Date": procparams['time_complete']['values'][0],
+            "Date": date_exp,
             "Experiment Type_seqfil": procparams['seqfil']['values'][0],
             "Experiment Type_explist": procparams['explist']['values'][0],
             "Experiment Type_explabel": procparams['explabel']['values'][0],
