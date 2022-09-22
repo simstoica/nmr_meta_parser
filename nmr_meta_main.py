@@ -33,34 +33,17 @@ if __name__ == "__main__":
     # Parsing
 
     csv_rows = []
+    keys = ['Experiment']
     for experiment in experiment_folders:
         metadata = nmr_parser.parse(experiment)
         metadata['Experiment'] = str(experiment)
         csv_rows.append(metadata)
-
-    # csv header
-    fieldnames = [
-        'Experiment',
-        'Email',
-        'Requester',
-        'Gnumber',
-        'Manufacturer',
-        'Machine',
-        'Date',
-        'Experiment Type_explist',
-        'Experiment Type_seqfil',
-        'Experiment Type_explabel',
-        'Solvent',
-        'Nucleus_1',
-        'Nucleus_2',
-        'Frequency_1',
-        'Frequency_2',
-        'Number of scans',
-        'Pulse Sequence'
-    ]
+        
+        keys.extend(key for key in metadata if key not in keys)
+        
 
     # csv data
     with open(p.opt.nmr_csv_name, 'w', encoding='UTF8', newline='') as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer = csv.DictWriter(f, fieldnames=keys)
         writer.writeheader()
         writer.writerows(csv_rows)

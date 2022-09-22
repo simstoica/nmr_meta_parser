@@ -32,3 +32,11 @@ def get_requester_email(experiment_folder):
 
 def get_gnumber(experiment_folder):
     return get_file_contents_in_parent_folder(experiment_folder, '.gnumber')
+
+
+def to_celsius(temperature_in_K):
+    return temperature_in_K - 273.15
+
+
+def to_kelvin(temperature_in_C):
+    return temperature_in_C + 273.15

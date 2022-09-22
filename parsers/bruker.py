@@ -27,7 +27,8 @@ def parse_params(experiment_folder):
             'Frequency_2': acqus['acqus']['BF2'],
             'Nucleus_1': acqus['acqus']['NUC1'].upper(),
             'Nucleus_2': acqus['acqus']['NUC2'].upper(),
-            'Pulse Sequence': acqus['acqus']['PULPROG']
+            'Pulse Sequence': acqus['acqus']['PULPROG'],
+            'Temperature' : int(acqus['acqus']['TE'])
         }
 
     except Exception as e:
