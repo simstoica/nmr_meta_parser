@@ -40,3 +40,7 @@ def to_celsius(temperature_in_K):
 
 def to_kelvin(temperature_in_C):
     return temperature_in_C + 273.15
+
+
+def to_2_digits_float_string(value):
+    return f'{float(value):.2f}'

@@ -1,7 +1,7 @@
 from datetime import datetime
 import nmrglue as ng
 
-from utils import get_email, get_requester_email, get_gnumber
+from utils import get_email, get_requester_email, get_gnumber, to_2_digits_float_string
 
 
 def parse_params(experiment_folder):
@@ -20,15 +20,15 @@ def parse_params(experiment_folder):
             "Manufacturer": 'Bruker',
             "Machine": acqus['acqus']['INSTRUM'],
             "Date": exp_date,
-            "Experiment Type_seqfil": acqus['acqus']['EXP'],
+            "Experiment Type": '2D' if 'acqu2s' in acqus else '1D', 
             'Number of scans': acqus['acqus']['NS'],
             'Solvent': acqus['acqus']['SOLVENT'],
-            'Frequency_1': acqus['acqus']['BF1'],
-            'Frequency_2': acqus['acqus']['BF2'],
+            'Frequency_1': to_2_digits_float_string(acqus['acqus']['BF1']),
+            'Frequency_2': to_2_digits_float_string(acqus['acqus']['BF2']),
             'Nucleus_1': acqus['acqus']['NUC1'].upper(),
             'Nucleus_2': acqus['acqus']['NUC2'].upper(),
             'Pulse Sequence': acqus['acqus']['PULPROG'],
-            'Temperature' : int(acqus['acqus']['TE'])
+            'Temperature': int(acqus['acqus']['TE'])
         }
 
     except Exception as e:

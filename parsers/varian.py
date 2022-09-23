@@ -3,7 +3,7 @@ import nmrglue as ng
 import os
 
 from utils import get_email, get_gnumber, get_requester_email
-from utils import to_kelvin
+from utils import to_kelvin, to_2_digits_float_string
 
 def parse_params(experiment_folder):
     proc_file_name = os.path.abspath(os.path.join(experiment_folder, "procpar"))
@@ -22,17 +22,18 @@ def parse_params(experiment_folder):
             "Manufacturer": 'Varian',
             "Machine": procparams['console']['values'][0],
             "Date": date_exp,
-            "Experiment Type_seqfil": procparams['seqfil']['values'][0],
+            'Experiment Type': procparams['apptype']['values'][0][-2:],
+            # "Experiment Type_seqfil": procparams['seqfil']['values'][0],
             # "Experiment Type_explist": procparams['explist']['values'][0],
             # "Experiment Type_explabel": procparams['explabel']['values'][0],
             'Number of scans': procparams['ct']['values'][0],
             'Solvent': procparams['solvent']['values'][0],
-            'Frequency_1': procparams['sfrq']['values'][0],
-            'Frequency_2': procparams['dfrq']['values'][0],
+            'Frequency_1': to_2_digits_float_string(procparams['sfrq']['values'][0]),
+            'Frequency_2': to_2_digits_float_string(procparams['dfrq']['values'][0]),
             'Nucleus_1': procparams['tn']['values'][0].upper(),
             'Nucleus_2': procparams['dn']['values'][0].upper(),
             'Pulse Sequence': procparams['seqfil']['values'][0],
-            'Temperature' : round(to_kelvin(float(procparams['temp']['values'][0])))
+            'Temperature': round(to_kelvin(float(procparams['temp']['values'][0])))
         }
     except Exception as e:
         print(f'Exception parsing varian experiment {e}')
