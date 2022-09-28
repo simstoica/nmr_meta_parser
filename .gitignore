@@ -1,0 +1,4 @@
+/data/**
+/NMR_Formats/**
+doc/**
+*.pyc
