@@ -1,4 +1,5 @@
 from pathlib import Path
+import re
 
 
 def find_file_in_parent_folders(experiment_folder, file_name):
@@ -44,3 +45,16 @@ def to_kelvin(temperature_in_C):
 
 def to_2_digits_float_string(value):
     return f'{float(value):.2f}'
+
+
+def get_2nd_nucleus_based_on_experiment_type(experiment_type, n_1, n_2):
+    if experiment_type == '1D':
+        return 'OFF'
+
+    return n_1 if n_2 == 'OFF' else n_2
+
+
+def isotope_number_first(nucleus):
+    return m[2] + m[1] if (m := re.match('([a-z,A-Z]*)([1-9]*)$', nucleus)) else nucleus
+        
+     
