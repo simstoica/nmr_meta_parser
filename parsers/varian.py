@@ -17,7 +17,9 @@ def parse_params(experiment_folder):
             'Email': get_email(experiment_folder),
             'Requester': get_requester_email(experiment_folder),
             'Gnumber': get_gnumber(experiment_folder),
-            "Manufacturer": 'Varian'}
+            "Manufacturer": 'Varian',
+            "Analysis" :'NMR'
+        }
         
         
         procparams = ng.fileio.varian.read_procpar(proc_file_name)

@@ -15,7 +15,8 @@ def parse_params(experiment_folder):
             'Email': get_email(experiment_folder),
             'Requester': get_requester_email(experiment_folder),
             'Gnumber': get_gnumber(experiment_folder),
-            "Manufacturer": 'Bruker'
+            "Manufacturer": 'Bruker', 
+            "Analysis" :'NMR'
         }
 
         date_exp = datetime.fromtimestamp(acqus['acqus']['DATE'])
