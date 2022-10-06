@@ -4,7 +4,7 @@ import os
 
 from utils import get_email, get_gnumber, get_requester_email
 from utils import to_kelvin, to_2_digits_float_string
-from utils import get_2nd_nucleus_based_on_experiment_type
+from utils import get_2nd_nucleus_based_on_experiment_type, isotope_number_first
 
 def parse_params(experiment_folder):
     proc_file_name = os.path.abspath(os.path.join(experiment_folder, "procpar"))
@@ -52,9 +52,16 @@ def parse_params(experiment_folder):
                 'Experiment Type':exp_type,
                 'Frequency_1': f_1,
                 'Frequency_2' :f_2,
-                'Nucleus_1': n_1, 
-                'Nucleus_2': n_2
+                'Nucleus_1': isotope_number_first(n_1), 
+                'Nucleus_2': isotope_number_first(n_2)
             })
+        
+        journal_id = _from_procparams('notebook')
+        if journal_id == '':
+            journal_id = 'N.A.'
+        parsed_parameters.update({
+            'Journal ID' : journal_id
+        })
      
         return parsed_parameters
     except Exception as e:
