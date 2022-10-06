@@ -44,3 +44,10 @@ def to_kelvin(temperature_in_C):
 
 def to_2_digits_float_string(value):
     return f'{float(value):.2f}'
+
+
+def get_2nd_nucleus_based_on_experiment_type(experiment_type, n_1, n_2):
+    if experiment_type == '1D':
+        return 'OFF'
+
+    return n_1 if n_2 == 'OFF' else n_2
