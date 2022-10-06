@@ -35,7 +35,7 @@ def parse_params(experiment_folder):
         parsed_parameters.update({
             "Machine": _from_procparams('console'),
             'Number of scans': _from_procparams('ct'),
-            'Solvent': _from_procparams('solvent'),
+            'Solvent': _from_procparams('solvent').lower(),
             'Pulse Sequence': _from_procparams('seqfil'),
             'Temperature': round(to_kelvin(float(_from_procparams('temp'))))
         })

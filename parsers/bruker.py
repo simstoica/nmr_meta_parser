@@ -27,7 +27,7 @@ def parse_params(experiment_folder):
         parsed_parameters.update({
             "Machine": acqus['acqus']['INSTRUM'],
             'Number of scans': acqus['acqus']['NS'],
-            'Solvent': acqus['acqus']['SOLVENT'],
+            'Solvent': acqus['acqus']['SOLVENT'].lower(),
             'Pulse Sequence': acqus['acqus']['PULPROG'],
             'Temperature': int(acqus['acqus']['TE']),
             })
