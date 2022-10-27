@@ -41,7 +41,6 @@ if __name__ == "__main__":
         
         keys.extend(key for key in metadata if key not in keys)
         
-
     # csv data
     with open(p.opt.nmr_csv_name, 'w', encoding='UTF8', newline='') as f:
         writer = csv.DictWriter(f, fieldnames=keys)

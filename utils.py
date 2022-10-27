@@ -26,11 +26,6 @@ def get_file_contents_in_parent_folder(experiment_folder, file_name):
 def get_email(experiment_folder):
     return get_file_contents_in_parent_folder(experiment_folder, '.email')
 
-
-def get_requester_email(experiment_folder):
-    return get_file_contents_in_parent_folder(experiment_folder, '.requestermail')
-
-
 def get_gnumber(experiment_folder):
     return get_file_contents_in_parent_folder(experiment_folder, '.gnumber')
 
@@ -56,5 +51,3 @@ def get_2nd_nucleus_based_on_experiment_type(experiment_type, n_1, n_2):
 
 def isotope_number_first(nucleus):
     return m[2] + m[1] if (m := re.match('([a-z,A-Z]*)([1-9]*)$', nucleus)) else nucleus
-        
-     
