@@ -23,10 +23,11 @@ def get_file_contents_in_parent_folder(experiment_folder, file_name):
         return ''
 
 
-def get_email(experiment_folder):
+def get_content_dot_email_file(experiment_folder):
     return get_file_contents_in_parent_folder(experiment_folder, '.email')
 
-def get_gnumber(experiment_folder):
+
+def get_content_dot_gnumber_file(experiment_folder):
     return get_file_contents_in_parent_folder(experiment_folder, '.gnumber')
 
 

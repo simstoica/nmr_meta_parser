@@ -1,7 +1,7 @@
 from datetime import datetime
 import nmrglue as ng
 
-from utils import get_email, get_gnumber, to_2_digits_float_string
+from utils import get_content_dot_email_file, get_content_dot_gnumber_file, to_2_digits_float_string
 from utils import get_2nd_nucleus_based_on_experiment_type, isotope_number_first
 
 
@@ -13,8 +13,8 @@ def parse_params(experiment_folder):
             return None
 
         parsed_parameters = {
-            'Email': get_email(experiment_folder),
-            'Gnumber': get_gnumber(experiment_folder),
+            'Author': get_content_dot_email_file(experiment_folder),
+            'Group': get_content_dot_gnumber_file(experiment_folder),
             "Manufacturer": 'Bruker',
             "Analysis": 'NMR'
         }
