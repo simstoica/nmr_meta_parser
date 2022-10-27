@@ -33,9 +33,10 @@ def parse_params(experiment_folder):
 
         parsed_parameters.update({
             "Machine": _from_procparams('console'),
-            'Number of scans': _from_procparams('ct'),
+            "Probe_head" : _from_procparams('probe_'),
+            'Number_of_scans': _from_procparams('ct'),
             'Solvent': _from_procparams('solvent').lower(),
-            'Pulse Sequence': _from_procparams('seqfil'),
+            'Pulse_sequence': _from_procparams('seqfil'),
             'Temperature': round(to_kelvin(float(_from_procparams('temp'))))
         })
 
@@ -47,7 +48,7 @@ def parse_params(experiment_folder):
         n_2 = get_2nd_nucleus_based_on_experiment_type(exp_type, n_1, _from_procparams('dn').upper())
 
         parsed_parameters.update({
-            'Experiment Type': exp_type,
+            'Experiment_type': exp_type,
             'Frequency_1': f_1,
             'Frequency_2': f_2,
             'Nucleus_1': isotope_number_first(n_1),
@@ -57,7 +58,7 @@ def parse_params(experiment_folder):
         journal_id = _from_procparams('notebook')
         if journal_id == '':
             journal_id = 'NA'
-        parsed_parameters['Journal ID'] = journal_id
+        parsed_parameters['Journal_ID'] = journal_id
 
         return parsed_parameters
     except Exception as e:

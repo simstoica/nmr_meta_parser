@@ -26,9 +26,10 @@ def parse_params(experiment_folder):
 
         parsed_parameters.update({
             "Machine": acqus['acqus']['INSTRUM'],
-            'Number of scans': acqus['acqus']['NS'],
+            'Probe_head' : acqus['acqus']['PROBHD'],
+            'Number_of_scans': acqus['acqus']['NS'],
             'Solvent': acqus['acqus']['SOLVENT'].lower(),
-            'Pulse Sequence': acqus['acqus']['PULPROG'],
+            'Pulse_sequence': acqus['acqus']['PULPROG'],
             'Temperature': int(acqus['acqus']['TE']),
         })
 
@@ -39,7 +40,7 @@ def parse_params(experiment_folder):
         n_2 = get_2nd_nucleus_based_on_experiment_type(exp_type, n_1, acqus['acqus']['NUC2'].upper())
 
         parsed_parameters.update({
-            'Experiment Type': exp_type,
+            'Experiment_type': exp_type,
             'Frequency_1': f_1,
             'Frequency_2': f_2,
             'Nucleus_1': isotope_number_first(n_1),
