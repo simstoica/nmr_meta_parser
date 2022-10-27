@@ -31,6 +31,7 @@ def parse_params(experiment_folder):
             'Solvent': acqus['acqus']['SOLVENT'].lower(),
             'Pulse_sequence': acqus['acqus']['PULPROG'],
             'Temperature': int(acqus['acqus']['TE']),
+            'Relaxation_delay' : acqus['acqus']['D'][1]
         })
 
         exp_type = '2D' if 'acqu2s' in acqus else '1D'
