@@ -37,8 +37,9 @@ def parse_params(experiment_folder):
             'Number_of_scans': _from_procparams('ct'),
             'Solvent': _from_procparams('solvent').lower(),
             'Pulse_sequence': _from_procparams('seqfil'),
+            'Pulse_width': to_n_digits_float_string(_from_procparams('pw'),n=1),
             'Temperature': round(to_kelvin(float(_from_procparams('temp')))),
-            'Relaxation_delay': _from_procparams('d1')
+            'Relaxation_delay': _from_procparams('d1'),
         })
 
         exp_type = _from_procparams('apptype')[-2:].upper()

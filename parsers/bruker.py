@@ -30,6 +30,7 @@ def parse_params(experiment_folder):
             'Number_of_scans': acqus['acqus']['NS'],
             'Solvent': acqus['acqus']['SOLVENT'].lower(),
             'Pulse_sequence': acqus['acqus']['PULPROG'],
+            'Pulse_width': to_n_digits_float_string(acqus['acqus']['P'][1], n=1),
             'Temperature': int(acqus['acqus']['TE']),
             'Relaxation_delay': acqus['acqus']['D'][1]
         })
