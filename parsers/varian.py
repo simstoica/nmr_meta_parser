@@ -33,27 +33,46 @@ def parse_params(experiment_folder):
 
         parsed_parameters.update({
             "Machine": _from_procparams('console'),
-            "Probe_head" : _from_procparams('probe_'),
+            "Probe_head": _from_procparams('probe_'),
             'Number_of_scans': _from_procparams('ct'),
             'Solvent': _from_procparams('solvent').lower(),
             'Pulse_sequence': _from_procparams('seqfil'),
             'Temperature': round(to_kelvin(float(_from_procparams('temp')))),
-            'Relaxation_delay' : _from_procparams('d1')
+            'Relaxation_delay': _from_procparams('d1')
         })
 
         exp_type = _from_procparams('apptype')[-2:].upper()
         f_1 = to_2_digits_float_string(_from_procparams('sfrq'))
-        f_2 = to_2_digits_float_string(_from_procparams('dfrq')) if exp_type == '2D' else 'OFF'
-
         n_1 = _from_procparams('tn').upper()
         n_2 = get_2nd_nucleus_based_on_experiment_type(exp_type, n_1, _from_procparams('dn').upper())
+
+        try:
+            _sw = float(_from_procparams('sw'))
+            _sfrq = float(_from_procparams('sfrq'))
+            spectral_width_1 = to_2_digits_float_string(_sw/_sfrq)
+        except Exception:
+            spectral_width_1 = 'NA'
+
+        if exp_type == '2D':
+            f_2 = to_2_digits_float_string(_from_procparams('dfrq'))
+            try:
+                _sw1 = float(_from_procparams('sw1'))
+                _dfrq = float(_from_procparams('dfrq'))
+                spectral_width_2 = to_2_digits_float_string(_sw1/_dfrq)
+            except Exception:
+                spectral_width_2 = 'NA'
+        else:
+            f_2 = 'OFF'
+            spectral_width_2 = 'NA'
 
         parsed_parameters.update({
             'Experiment_type': exp_type,
             'Frequency_1': f_1,
             'Frequency_2': f_2,
             'Nucleus_1': isotope_number_first(n_1),
-            'Nucleus_2': isotope_number_first(n_2)
+            'Nucleus_2': isotope_number_first(n_2),
+            'Spectral_width_1': spectral_width_1,
+            'Spectral_width_2': spectral_width_2
         })
 
         journal_id = _from_procparams('notebook')

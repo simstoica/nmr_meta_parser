@@ -36,16 +36,25 @@ def parse_params(experiment_folder):
 
         exp_type = '2D' if 'acqu2s' in acqus else '1D'
         f_1 = to_2_digits_float_string(acqus['acqus']['BF1'])
-        f_2 = to_2_digits_float_string(acqus['acqus']['BF2']) if exp_type == '2D' else 'OFF'
         n_1 = acqus['acqus']['NUC1'].upper()
         n_2 = get_2nd_nucleus_based_on_experiment_type(exp_type, n_1, acqus['acqus']['NUC2'].upper())
+        spectral_width_1 = acqus['acqus']['SW']
+                
+        if exp_type == '2D':
+            f_2 = to_2_digits_float_string(acqus['acqus']['BF2'])
+            spectral_width_2 = acqus['acqu2s']['SW']
+        else: 
+            f_2 = 'OFF'
+            spectral_width_2  = 'NA'
 
         parsed_parameters.update({
             'Experiment_type': exp_type,
             'Frequency_1': f_1,
             'Frequency_2': f_2,
             'Nucleus_1': isotope_number_first(n_1),
-            'Nucleus_2': isotope_number_first(n_2)
+            'Nucleus_2': isotope_number_first(n_2),
+            'Spectral_width_1': spectral_width_1,
+            'Spectral_width_2': spectral_width_2
         })
 
         return parsed_parameters
