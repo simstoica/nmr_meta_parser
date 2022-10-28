@@ -3,7 +3,7 @@ import nmrglue as ng
 import os
 
 from utils import get_content_dot_email_file, get_content_dot_gnumber_file
-from utils import to_kelvin, to_2_digits_float_string
+from utils import to_kelvin, to_n_digits_float_string
 from utils import get_2nd_nucleus_based_on_experiment_type, isotope_number_first
 
 
@@ -42,28 +42,37 @@ def parse_params(experiment_folder):
         })
 
         exp_type = _from_procparams('apptype')[-2:].upper()
-        f_1 = to_2_digits_float_string(_from_procparams('sfrq'))
+        f_1 = to_n_digits_float_string(_from_procparams('sfrq'))
         n_1 = _from_procparams('tn').upper()
         n_2 = get_2nd_nucleus_based_on_experiment_type(exp_type, n_1, _from_procparams('dn').upper())
 
         try:
             _sw = float(_from_procparams('sw'))
             _sfrq = float(_from_procparams('sfrq'))
-            spectral_width_1 = to_2_digits_float_string(_sw/_sfrq)
+            spectral_width_1 = to_n_digits_float_string(_sw/_sfrq)
+            _rfl = float(_from_procparams('rfl'))
+            _rfp = float(_from_procparams('rfp'))
+            center_1 = to_n_digits_float_string(((_sw/2)-_rfl+_rfp)/_sfrq, n=1)
         except Exception:
             spectral_width_1 = 'NA'
+            center_1 = 'NA'
 
         if exp_type == '2D':
-            f_2 = to_2_digits_float_string(_from_procparams('dfrq'))
+            f_2 = to_n_digits_float_string(_from_procparams('dfrq'))
             try:
                 _sw1 = float(_from_procparams('sw1'))
                 _dfrq = float(_from_procparams('dfrq'))
-                spectral_width_2 = to_2_digits_float_string(_sw1/_dfrq)
+                spectral_width_2 = to_n_digits_float_string(_sw1/_dfrq)
+                _rfl1 = float(_from_procparams('rfl1'))
+                _rfp1 = float(_from_procparams('rfp1'))
+                center_2 = to_n_digits_float_string(((_sw1/2)-_rfl1+_rfp1)/_dfrq, n=1)
             except Exception:
                 spectral_width_2 = 'NA'
+                center_2 = 'NA'
         else:
             f_2 = 'OFF'
             spectral_width_2 = 'NA'
+            center_2 = 'NA'
 
         parsed_parameters.update({
             'Experiment_type': exp_type,
@@ -72,7 +81,9 @@ def parse_params(experiment_folder):
             'Nucleus_1': isotope_number_first(n_1),
             'Nucleus_2': isotope_number_first(n_2),
             'Spectral_width_1': spectral_width_1,
-            'Spectral_width_2': spectral_width_2
+            'Spectral_width_2': spectral_width_2,
+            'Center_1': center_1,
+            'Center_2': center_2
         })
 
         journal_id = _from_procparams('notebook')

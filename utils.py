@@ -39,8 +39,8 @@ def to_kelvin(temperature_in_C):
     return temperature_in_C + 273.15
 
 
-def to_2_digits_float_string(value):
-    return f'{float(value):.2f}'
+def to_n_digits_float_string(value, n=2):
+    return f'{float(value):.{n}f}'
 
 
 def get_2nd_nucleus_based_on_experiment_type(experiment_type, n_1, n_2):
