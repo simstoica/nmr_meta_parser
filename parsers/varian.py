@@ -2,10 +2,9 @@ from datetime import datetime
 import nmrglue as ng
 import os
 
-from utils import get_content_dot_email_file, get_content_dot_gnumber_file
-from utils import to_kelvin, to_n_digits_float_string
-from utils import get_2nd_nucleus_based_on_experiment_type, isotope_number_first
-
+from parse_utils import get_content_dot_email_file, get_content_dot_gnumber_file
+from parse_utils import to_kelvin, to_n_digits_float_string
+from parse_utils import get_2nd_nucleus_based_on_experiment_type, isotope_number_first
 
 def parse_params(experiment_folder):
     proc_file_name = os.path.abspath(os.path.join(experiment_folder, "procpar"))
@@ -37,7 +36,7 @@ def parse_params(experiment_folder):
             'Number_of_scans': _from_procparams('ct'),
             'Solvent': _from_procparams('solvent').lower(),
             'Pulse_sequence': _from_procparams('seqfil'),
-            'Pulse_width': to_n_digits_float_string(_from_procparams('pw'),n=1),
+            'Pulse_width': to_n_digits_float_string(_from_procparams('pw'), n=1),
             'Temperature': round(to_kelvin(float(_from_procparams('temp')))),
             'Relaxation_delay': _from_procparams('d1'),
         })

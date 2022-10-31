@@ -1,9 +1,23 @@
+import contextlib
 from datetime import datetime
 import nmrglue as ng
 
-from utils import get_content_dot_email_file, get_content_dot_gnumber_file, to_n_digits_float_string
-from utils import get_2nd_nucleus_based_on_experiment_type, isotope_number_first
+from parse_utils import get_content_dot_email_file, get_content_dot_gnumber_file, to_n_digits_float_string
+from parse_utils import get_2nd_nucleus_based_on_experiment_type, isotope_number_first
 
+
+class Bruker:
+    acqus = None
+    is_valid = False
+    
+    def __init__(self,experiment_folder) -> None:
+ 
+        with contextlib.suppress(Exception):
+            self.acqus = ng.fileio.bruker.read_acqus_file(experiment_folder)
+
+            if 'acqus' in  self.acqus:
+                self.is_valid = True
+        
 
 def parse_params(experiment_folder):
     try:
