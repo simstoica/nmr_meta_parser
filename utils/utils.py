@@ -1,3 +1,4 @@
+import contextlib
 import datetime
 import logging
 import logging.handlers
@@ -13,8 +14,8 @@ def ensure_dir(path):
         if not os.path.exists(path):
             os.makedirs(path)
         return True
-    except:
-        return False 
+    except Exception:
+        return False
 
 
 def getSize(pathList):
@@ -54,7 +55,7 @@ def can_connect(hostname):
 
 
 def walkToDict(root):
-    #irods collection
+    # irods collection
     items = []
     for collection, subcolls, _ in root.walk():
         items.append(collection.path)
@@ -82,7 +83,8 @@ def saveIenv(ienv):
     if "ui_ienvFilePath" in ienv:
         envFile = ienv["ui_ienvFilePath"]
     else:
-        envFile = os.path.join(os.path.expanduser("~"), ".irods"+os.sep+"irods_environment.json")
+        envFile = os.path.join(os.path.expanduser("~"), f".irods{os.sep}irods_environment.json")
+
         ienv["ui_ienvFilePath"] = envFile
     with open(envFile, 'w') as f:
         json.dump(ienv, f, indent=4)
@@ -97,23 +99,18 @@ def get_filepath():
         file_path = os.path.dirname(__file__)
     return file_path
 
+
 # check if a given directory exists on the drive
 def check_direxists(dir):
-    if _check_exists(dir):
-        return os.path.isdir(dir)
-    return False
+    return os.path.isdir(dir) if _check_exists(dir) else False
+
 
 def check_fileexists(file):
-    if _check_exists(file):
-        return os.path.isfile(file)
-    return False
+    return os.path.isfile(file) if _check_exists(file) else False
+
 
 def _check_exists(fname):
-    if fname is None:
-        return False
-    if not os.path.exists(fname):
-        return False
-    return True
+    return False if fname is None else bool(os.path.exists(fname))
 
 
 def setup_logger(logdir, appname):
@@ -486,7 +483,5 @@ class LocalPath(PurePath):
             Okay if directory already exists?
 
         """
-        try:
+        with contextlib.suppress(AttributeError):
             self.path.mkdir(mode=mode, parents=parents, exist_ok=exist_ok)
-        except AttributeError:
-            pass

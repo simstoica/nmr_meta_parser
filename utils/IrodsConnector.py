@@ -105,7 +105,7 @@ class IrodsConnector():
 
         """
         self.__name__ = 'IrodsConnector'
-        self.irods_env_file = irods_env_file
+        self.irods_env_file = irods_env_file or get_default_environment_file()
         if password:
             self.password = password
         self.multiplier = MULTIPLIER
@@ -313,9 +313,11 @@ class IrodsConnector():
             print(f'Default resource: {self.default_resc}')
             print('You have access to: \n')
             home_path = f'/{self._session.zone}/home'
-            if self._session.collections.exists(home_path):
-                colls = self._session.collections.get(home_path).subcollections
-                print('\n'.join([coll.path for coll in colls]))
+            assert(self._session.collections.exists(home_path))
+            # if self._session.collections.exists(home_path):
+            #     colls = self._session.collections.get(home_path).subcollections
+            #     print('\n'.join([coll.path for coll in colls]))
+            
             logging.info(
                 'IRODS LOGIN SUCCESS: %s, %s, %s', self._session.username,
                 self._session.zone, self._session.host)
@@ -1447,3 +1449,14 @@ def irods_dirname(path):
 
     """
     return utils.utils.IrodsPath(path).parent
+
+
+
+def get_default_environment_file():
+    try:
+        env_file = os.environ['IRODS_ENVIRONMENT_FILE']
+    except KeyError:
+        env_file = os.path.expanduser('~/.irods/irods_environment.json')
+        
+    return env_file
+    
