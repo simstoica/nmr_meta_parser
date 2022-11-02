@@ -5,10 +5,11 @@ import nmrglue as ng
 from parse_utils import get_content_dot_email_file, get_content_dot_gnumber_file, to_n_digits_float_string
 from parse_utils import get_2nd_nucleus_based_on_experiment_type, isotope_number_first
 
+from parsers import experiment_parser
 
-class Bruker:
+
+class Bruker(experiment_parser.Experiment_parser):
     acqus = None
-    is_valid = False
 
     def __init__(self, experiment_folder):
         self._experiment_folder = experiment_folder
@@ -18,19 +19,6 @@ class Bruker:
             if 'acqus' in self.acqus:
                 self.is_valid = True
                 self.parsed_parameters = {}
-
-    def __bool__(self):
-        return self.is_valid
-
-    def parse_params(self):
-        try:
-            return self.parse_header_information() + \
-                self.parse_date() + \
-                self.parse_experiment_information() + \
-                self.nuclea_information()
-        except Exception as e:
-            print(f'Exception parsing brucker experiment `{self._experiment_folder}` error:{e}')
-            return []
 
     def parse_header_information(self):
         return [
