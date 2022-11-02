@@ -51,8 +51,8 @@ def parse_params(experiment_folder):
 
         exp_type = '2D' if 'acqu2s' in acqus else '1D'
         f_1 = to_n_digits_float_string(acqus['acqus']['BF1'])
-        n_1 = acqus['acqus']['NUC1'].upper()
-        n_2 = get_2nd_nucleus_based_on_experiment_type(exp_type, n_1, acqus['acqus']['NUC2'].upper())
+        n_1 = acqus['acqus']['NUC1']
+        n_2 = get_2nd_nucleus_based_on_experiment_type(exp_type, n_1, acqus['acqus']['NUC2'])
         spectral_width_1 = to_n_digits_float_string(acqus['acqus']['SW'])
         center_1 = to_n_digits_float_string(float(acqus['acqus']['O1'])/float(acqus['acqus']['BF1']), n=1)
 
