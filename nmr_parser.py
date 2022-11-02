@@ -8,4 +8,3 @@ def parse(experiment_folder):
         return params.parse_params()
     if params := parsers.bruker.Bruker(experiment_folder):
         return params.parse_params()
-    
