@@ -44,8 +44,8 @@ def parse_params(experiment_folder):
 
         exp_type = _from_procparams('apptype')[-2:].upper()
         f_1 = to_n_digits_float_string(_from_procparams('sfrq'))
-        n_1 = _from_procparams('tn').upper()
-        n_2 = get_2nd_nucleus_based_on_experiment_type(exp_type, n_1, _from_procparams('dn').upper())
+        n_1 = _from_procparams('tn')
+        n_2 = get_2nd_nucleus_based_on_experiment_type(exp_type, n_1, _from_procparams('dn'))
 
         try:
             _sw = float(_from_procparams('sw'))
