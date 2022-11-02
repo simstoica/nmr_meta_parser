@@ -4,6 +4,7 @@ import csv
 
 import nmr_parser
 from nmr_meta_cl_parser import Nmr_meta_cl_parser
+from utils.IrodsConnector import IrodsConnector
 
 
 def get_subdirectories(path):
@@ -26,21 +27,22 @@ if __name__ == "__main__":
     p = Nmr_meta_cl_parser()
     p.parse()
 
+    conn = IrodsConnector(irods_env_file=p.opt.irods_env_file, irods_auth_file=p.opt.irods_auth_file)
+    conn.session
+
     # Expermiment discovery
     experiment_folders = get_all_experiment_folders(p.opt.nmr_data_local_folder)
     print(len(experiment_folders))
 
     # Parsing
-
     csv_rows = []
     keys = ['Experiment']
     for experiment in experiment_folders:
         metadata = nmr_parser.parse(experiment)
         metadata['Experiment'] = str(experiment)
         csv_rows.append(metadata)
-        
+
         keys.extend(key for key in metadata if key not in keys)
-        
 
     # csv data
     with open(p.opt.nmr_csv_name, 'w', encoding='UTF8', newline='') as f:
