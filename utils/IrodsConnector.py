@@ -83,7 +83,7 @@ class IrodsConnector():
     _resources = None
     _session = None
 
-    def __init__(self, irods_env_file='', password=''):
+    def __init__(self, irods_env_file='', password='', irods_auth_file = ''):
         """iRODS authentication with Python client.
 
         Parameters
@@ -108,6 +108,7 @@ class IrodsConnector():
         self.irods_env_file = irods_env_file or get_default_environment_file()
         if password:
             self.password = password
+        self._irods_auth_file = irods_auth_file 
         self.multiplier = MULTIPLIER
 
     @property
@@ -164,7 +165,11 @@ class IrodsConnector():
 
         """
         if not self._password:
-            irods_auth_file = os.environ.get(
+            if self._irods_auth_file:
+                irods_auth_file = utils.utils.LocalPath(
+                    self._irods_auth_file).expanduser()
+            else:    
+                irods_auth_file = os.environ.get(
                 'IRODS_AUTHENTICATION_FILE', None)
             if irods_auth_file is None:
                 irods_auth_file = utils.utils.LocalPath(
@@ -313,10 +318,10 @@ class IrodsConnector():
             print(f'Default resource: {self.default_resc}')
             print('You have access to: \n')
             home_path = f'/{self._session.zone}/home'
-            assert(self._session.collections.exists(home_path))
-            # if self._session.collections.exists(home_path):
-            #     colls = self._session.collections.get(home_path).subcollections
-            #     print('\n'.join([coll.path for coll in colls]))
+            # assert(self._session.collections.exists(home_path))
+            if self._session.collections.exists(home_path):
+                colls = self._session.collections.get(home_path).subcollections
+                print('\n'.join([coll.path for coll in colls]))
             
             logging.info(
                 'IRODS LOGIN SUCCESS: %s, %s, %s', self._session.username,
