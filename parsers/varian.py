@@ -8,7 +8,6 @@ from parse_utils import get_2nd_nucleus_based_on_experiment_type, isotope_number
 
 from parsers import experiment_parser
 
-
 class Varian(experiment_parser.Experiment_parser):
 
     def __init__(self, experiment_folder):
@@ -60,7 +59,7 @@ class Varian(experiment_parser.Experiment_parser):
         try:
             _sw = float(self._from_procparams('sw'))
             _sfrq = float(self._from_procparams('sfrq'))
-            spectral_width_1 = to_n_digits_float_string(_sw/_sfrq)
+            spectral_width_1 = to_n_digits_float_string(_sw/_sfrq, n=1)
             _rfl = float(self._from_procparams('rfl'))
             _rfp = float(self._from_procparams('rfp'))
             center_1 = to_n_digits_float_string(((_sw/2)-_rfl+_rfp)/_sfrq, n=1)
@@ -73,7 +72,7 @@ class Varian(experiment_parser.Experiment_parser):
             try:
                 _sw1 = float(self._from_procparams('sw1'))
                 _dfrq = float(self._from_procparams('dfrq'))
-                spectral_width_2 = to_n_digits_float_string(_sw1/_dfrq)
+                spectral_width_2 = to_n_digits_float_string(_sw1/_dfrq, n=1)
                 _rfl1 = float(self._from_procparams('rfl1'))
                 _rfp1 = float(self._from_procparams('rfp1'))
                 center_2 = to_n_digits_float_string(((_sw1/2)-_rfl1+_rfp1)/_dfrq, n=1)

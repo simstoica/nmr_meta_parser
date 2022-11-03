@@ -52,12 +52,12 @@ class Bruker(experiment_parser.Experiment_parser):
         f_1 = to_n_digits_float_string(self.acqus['acqus']['BF1'])
         n_1 = self.acqus['acqus']['NUC1']
         n_2 = get_2nd_nucleus_based_on_experiment_type(exp_type, n_1, self.acqus['acqus']['NUC2'])
-        spectral_width_1 = to_n_digits_float_string(self.acqus['acqus']['SW'])
+        spectral_width_1 = to_n_digits_float_string(self.acqus['acqus']['SW'], n=1)
         center_1 = to_n_digits_float_string(float(self.acqus['acqus']['O1'])/float(self.acqus['acqus']['BF1']), n=1)
 
         if exp_type == '2D':
             f_2 = to_n_digits_float_string(self.acqus['acqus']['BF2'])
-            spectral_width_2 = to_n_digits_float_string(self.acqus['acqu2s']['SW'])
+            spectral_width_2 = to_n_digits_float_string(self.acqus['acqu2s']['SW'], n=1)
             center_2 = to_n_digits_float_string(
                 float(self.acqus['acqu2s']['O1'])/float(self.acqus['acqu2s']['BF1']), n=1)
         else:
