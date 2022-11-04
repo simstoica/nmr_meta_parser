@@ -8,6 +8,7 @@ from parse_utils import get_2nd_nucleus_based_on_experiment_type, isotope_number
 
 from parsers import experiment_parser
 
+
 class Varian(experiment_parser.Experiment_parser):
 
     def __init__(self, experiment_folder):
@@ -95,6 +96,12 @@ class Varian(experiment_parser.Experiment_parser):
             ['Center_1', center_1, 'ppm'],
             ['Center_2', center_2, 'ppm']
         ]
+
+    def parse_parameter_files(self):
+        return [
+            ['Parameter_file', 'procpar', '']
+        ]
+
 
     def _from_procparams(self, field_name):
         return self._procparams[field_name]['values'][0]

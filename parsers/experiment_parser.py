@@ -10,8 +10,9 @@ class Experiment_parser:
                 return self.parse_header_information() + \
                     self.parse_date() + \
                     self.parse_experiment_information() + \
-                    self.nuclea_information()
-            return []        
+                    self.nuclea_information() + \
+                    self.parse_parameter_files()
+            return []
         except Exception as e:
             print(f'Exception parsing experiment `{self._experiment_folder}` error:{e}')
             return []

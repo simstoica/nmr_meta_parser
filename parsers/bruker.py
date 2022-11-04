@@ -1,5 +1,6 @@
 import contextlib
 from datetime import datetime
+import os
 import nmrglue as ng
 
 from parse_utils import get_content_dot_email_file, get_content_dot_gnumber_file, to_n_digits_float_string
@@ -76,3 +77,11 @@ class Bruker(experiment_parser.Experiment_parser):
             ['Center_1', center_1, 'ppm'],
             ['Center_2', center_2, 'ppm']
         ]
+        
+    def parse_parameter_files(self):
+        acqus_files = []
+        for f in ["acqus", "acqu2s", "acqu3s", "acqu4s"]:
+            fp = os.path.join(self._experiment_folder, f)
+            if os.path.isfile(fp):
+                acqus_files.append(['Parameter_file', f, ''])
+        return acqus_files
