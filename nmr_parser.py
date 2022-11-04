@@ -1,6 +1,7 @@
 import parsers.varian
 import parsers.bruker
 
+NMR_PARSER_VERSION = '1.0'
 
 # TODO: discover parsers
 def parse(experiment_folder):
