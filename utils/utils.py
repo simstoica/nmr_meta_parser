@@ -113,7 +113,7 @@ def _check_exists(fname):
     return False if fname is None else bool(os.path.exists(fname))
 
 
-def setup_logger(logdir, appname):
+def setup_logger(logdir, appname, level = None):
     """Initialize the application logging service.
 
     Parameters
@@ -126,6 +126,8 @@ def setup_logger(logdir, appname):
     """
     logdir = pathlib.Path(logdir)
     logfile = logdir.joinpath(f'{appname}.log')
+    if not level:
+        level = logging.INFO
     log_format = '[%(asctime)s] {%(filename)s:%(lineno)d} %(levelname)s - %(message)s'
     handlers = [
         logging.handlers.RotatingFileHandler(logfile, 'a', 100000, 1),
