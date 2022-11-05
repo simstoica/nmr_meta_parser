@@ -1,11 +1,12 @@
 import os
 import csv
-
+import logging
 
 import nmr_parser
 from nmr_meta_cl_parser import Nmr_meta_cl_parser
 from nmr_meta_binder import NMR_meta_binder
 from utils.IrodsConnector import IrodsConnector
+import utils
 
 
 def get_subdirectories(path):
@@ -29,6 +30,8 @@ def get_all_experiment_folders(path):
 if __name__ == "__main__":
     p = Nmr_meta_cl_parser()
     p.parse()
+    
+    utils.utils.setup_logger('.', 'NMR_meta_logger', logging.DEBUG)
 
     conn = IrodsConnector(irods_env_file=p.opt.irods_env_file, irods_auth_file=p.opt.irods_auth_file)
     NMR_meta_binder(p.opt.nmr_data_local_folder, p.opt.nmr_data_rdms_folder, conn).execute()
