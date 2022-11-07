@@ -83,5 +83,5 @@ class Bruker(experiment_parser.Experiment_parser):
         for f in ["acqus", "acqu2s", "acqu3s", "acqu4s"]:
             fp = os.path.join(self._experiment_folder, f)
             if os.path.isfile(fp):
-                acqus_files.append(['Parameter_file', f, ''])
+                acqus_files.append(['Parameter_file', str(fp), ''])
         return acqus_files

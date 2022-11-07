@@ -32,11 +32,16 @@ class Nmr_meta_cl_parser(BaseParser):
                                  'If no authentication file has been provided, system will select '
                                  'default ~/.irods/.irodsA')
 
-        self.parser.add_argument("--nmr-data-local-folder", type=str, required=False, default=os.getcwd(),
+        self.parser.add_argument("--nmr-data-local-folder", type=str, required=True, default=os.getcwd(),
                                  help='Local path to the folder with the organized nmr data')
 
-        self.parser.add_argument("--nmr-data-rdms-folder", type=str, required=False,
+        self.parser.add_argument("--nmr-data-rdms-folder", type=str, required=True,
                                  help='Path on the rdms with the organized nmr data')
 
-        self.parser.add_argument("--nmr-csv-name", type=str, required=False, default='nmr_metadata.csv',
+
+        self.parser.add_argument("--log-level", type=str, required=False, default='info', choices=['info', 'debug', 'warning'], 
+                                 help='Level of information to be given in the logs')
+
+
+        self.parser.add_argument("--nmr-csv-name", type=str, required=False, default='',
                                  help='File name of the summary CSV with metadta')

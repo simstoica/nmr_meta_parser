@@ -99,7 +99,7 @@ class Varian(experiment_parser.Experiment_parser):
 
     def parse_parameter_files(self):
         return [
-            ['Parameter_file', 'procpar', '']
+            ['Parameter_file', str(os.path.join(self._experiment_folder,'procpar')), '']
         ]
 
 
