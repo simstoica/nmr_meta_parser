@@ -38,5 +38,10 @@ class Nmr_meta_cl_parser(BaseParser):
         self.parser.add_argument("--nmr-data-rdms-folder", type=str, required=False,
                                  help='Path on the rdms with the organized nmr data')
 
+
+        self.parser.add_argument("--log-level", type=str, required=False, default='info', choices=['info', 'debug', 'warning'], 
+                                 help='Level of information to be given in the logs')
+
+
         self.parser.add_argument("--nmr-csv-name", type=str, required=False, default='nmr_metadata.csv',
                                  help='File name of the summary CSV with metadta')
