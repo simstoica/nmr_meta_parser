@@ -1256,10 +1256,14 @@ class IrodsConnector():
         for item in items:
             try:
                 item.metadata.apply_atomic_operations(*list_of_tags)
+                return True
             except irods.meta.BadAVUOperationValue:
                 print(f"{RED}INFO ADD MULTIPLE META: bad metadata value{DEFAULT}")
+                return False
             except Exception as e:
+                print(f'items {avus}')
                 print(f"{RED}INFO ADD MULTIPLE META: unexpected error{DEFAULT}")
+                return False
             except irods.exception.CAT_NO_ACCESS_PERMISSION as cnap:
                 print("ERROR UPDATE META: no permissions")
                 raise cnap
