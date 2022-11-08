@@ -40,12 +40,12 @@ class Varian(experiment_parser.Experiment_parser):
             journal_id = 'NA'
 
         return [
-            ["Machine", self._from_procparams('console'), 'microseconds [\u03BCs]'],
+            ["Machine", self._from_procparams('console'), ''],
             ["Probe_head", self._from_procparams('probe_'), ''],
             ['Number_of_scans', self._from_procparams('ct'), ''],
             ['Solvent', self._from_procparams('solvent').lower(), ''],
             ['Pulse_sequence', self._from_procparams('seqfil'), ''],
-            ['Pulse_width', to_n_digits_float_string(self._from_procparams('pw'), n=1), ''],
+            ['Pulse_width', to_n_digits_float_string(self._from_procparams('pw'), n=1), 'microseconds [\u03BCs]'],
             ['Temperature', round(to_kelvin(float(self._from_procparams('temp')))), 'Kelvin [K]'],
             ['Relaxation_delay', self._from_procparams('d1'), 'seconds [s]'],
             ['Journal_ID', journal_id, '']
@@ -99,9 +99,8 @@ class Varian(experiment_parser.Experiment_parser):
 
     def parse_parameter_files(self):
         return [
-            ['Parameter_file', str(os.path.join(self._experiment_folder,'procpar')), '']
+            ['Parameter_file', str(os.path.join(self._experiment_folder, 'procpar')), '']
         ]
-
 
     def _from_procparams(self, field_name):
         return self._procparams[field_name]['values'][0]
