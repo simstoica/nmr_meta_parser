@@ -23,7 +23,6 @@ class NMR_meta_binder():
         self.path_to_csv_file = path_to_csv_file
         self.all_metadata = []
         self.keys = []
-        
 
     def execute(self):
         associated_groups = get_subdirectories(self.path_to_local_folder)
@@ -36,7 +35,7 @@ class NMR_meta_binder():
                 experiments_list = get_subdirectories(folder)
                 for experiment in experiments_list:
                     self.bind_metadata(experiment)
-                    
+
         self.print_csv_if_needed()
 
     def bind_metadata(self, experiment_folder):
@@ -62,7 +61,7 @@ class NMR_meta_binder():
         logging.debug(f'\t\tPrepared metadata {prepared_metadata}')
         if not self.irods_connector.addMultipleMetadata([irods_collection_of_experiment], prepared_metadata):
             logging.error(f'Could not attach metadata to `{experiment_folder_on_irods}`')
-        
+
         self._attach_to_csv_overview(experiment_folder, prepared_metadata)
         logging.info(f'\t\tAttached metadata to collection `{experiment_folder_on_irods}`')
 
@@ -84,8 +83,7 @@ class NMR_meta_binder():
         relative_path_to_experiment = os.path.relpath(os.path.expanduser(experiment_folder), self.path_to_local_folder)
 
         return irods.path.iRODSPath(self.path_to_rdms_folder, relative_path_to_experiment)
-    
-    
+
     def _attach_to_csv_overview(self, experiment_folder, metadata):
         if not self.path_to_csv_file:
             return
@@ -93,14 +91,14 @@ class NMR_meta_binder():
         metadata.insert(0, ['Experiment', str(experiment_folder), ''])
         self.all_metadata.append(metadata)
 
-        current_keys = [a for a,_,_ in metadata]
+        current_keys = [a for a, _, _ in metadata]
         for a in current_keys:
-            if a in self.keys and current_keys.count(a)==self.keys.count(a):
+            if a in self.keys and current_keys.count(a) == self.keys.count(a):
                 continue
-            
+
             for _ in range(current_keys.count(a)-self.keys.count(a)):
-                self.keys.append(a)                
-   
+                self.keys.append(a)
+
     def print_csv_if_needed(self):
         if not self.path_to_csv_file:
             return
@@ -109,15 +107,14 @@ class NMR_meta_binder():
             writer = csv.writer(f)
             writer.writerow(self.keys)
 
-
             for metadata_list in self.all_metadata:
                 writer.writerow(self._map_current_keys_to_header(metadata_list))
 
     def _map_current_keys_to_header(self, metadata_list):
-        metadata_row = [''] * len(self.keys)    
+        metadata_row = [''] * len(self.keys)
 
-        current_keys = [a for a,_,_ in metadata_list]
-        values = [v for _,v,_ in metadata_list]
+        current_keys = [a for a, _, _ in metadata_list]
+        values = [v for _, v, _ in metadata_list]
 
         for a in current_keys:
             n1 = current_keys.count(a)
@@ -135,9 +132,8 @@ class NMR_meta_binder():
                     start_index_keys = index_in_keys + 1
                     n1 -= 1
                     n2 -= 1
-                    
+
         return metadata_row
-        
 
 
 def get_subdirectories(path):
