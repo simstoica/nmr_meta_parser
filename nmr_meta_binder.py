@@ -29,7 +29,7 @@ class NMR_meta_binder():
         self.keys = []
 
     def execute(self):
-        self.scan_directory_and_subfolders(self, self.path_to_local_folder, depth = 0)
+        self.scan_directory_and_subfolders(self.path_to_local_folder, depth=0)
         self.print_csv_if_needed()
 
     def scan_directory_and_subfolders(self, current_path, depth):
