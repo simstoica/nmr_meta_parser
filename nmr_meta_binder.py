@@ -86,7 +86,7 @@ class NMR_meta_binder():
                 value = self._get_path_on_irods_server(value)
             if not value:
                 value = 'NA'
-            prepared_meta.append([f'{key}', f'{value}', f'{unit}'])
+            prepared_meta.append([f'nmr::{key}', f'{value}', f'{unit}'])
         return prepared_meta
 
     def _get_path_on_irods_server(self, experiment_folder):
