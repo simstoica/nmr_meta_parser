@@ -25,11 +25,11 @@ if __name__ == "__main__":
 
     if not conn.collection_exists(p.opt.nmr_data_rdms_folder):
         logging.warning(f'Irods collection {p.opt.nmr_data_rdms_folder} does not exist!')
-
-    NMR_meta_binder(
-        p.opt.nmr_data_local_folder,
-        p.opt.nmr_data_rdms_folder,
-        p.opt.nmr_csv_name,
-        p.opt.max_depth,
-        conn
-    ).execute()
+    else:    
+        NMR_meta_binder(
+            p.opt.nmr_data_local_folder,
+            p.opt.nmr_data_rdms_folder,
+            p.opt.nmr_csv_name,
+            p.opt.max_depth,
+            conn
+        ).execute()
