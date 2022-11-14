@@ -16,11 +16,12 @@ SYSTEM_NMR_META_VERSION = 'sysmdt_nmr_meta_version'
 
 class NMR_meta_binder():
 
-    def __init__(self, path_to_local_folder, path_to_rdms_folder, path_to_csv_file, irods_connector):
+    def __init__(self, path_to_local_folder, path_to_rdms_folder, path_to_csv_file, max_depth, irods_connector):
         self.path_to_local_folder = os.path.expanduser(path_to_local_folder)
         self.path_to_rdms_folder = path_to_rdms_folder
         self.irods_connector = irods_connector
         self.path_to_csv_file = path_to_csv_file
+        self.max_depth = max_depth
         logging.debug(f'path_to_local_folder : {path_to_local_folder}')
         logging.debug(f'path_to_rdms_folder  : {path_to_rdms_folder}')
         logging.debug(f'path_to_csv_file     : {path_to_csv_file}')
@@ -28,19 +29,21 @@ class NMR_meta_binder():
         self.keys = []
 
     def execute(self):
-        self.scan_directory_and_subfolders(self, self.path_to_local_folder)
+        self.scan_directory_and_subfolders(self, self.path_to_local_folder, depth = 0)
         self.print_csv_if_needed()
 
-    def scan_directory_and_subfolders(self, current_path):
+    def scan_directory_and_subfolders(self, current_path, depth):
         try:
             if nmr_parser.is_experiment(current_path):
                 logging.info(f'{current_path} : attempting to bind metadata')
                 self.bind_metadata(current_path)
-            else:
+            elif depth < self.max_depth:
                 logging.info(f'{current_path} : scanning subfolders')
                 next_level_subfolders = get_subdirectories(current_path)
                 for next_level_dir in next_level_subfolders:
-                    self.scan_directory_and_subfolders(next_level_dir)
+                    self.scan_directory_and_subfolders(next_level_dir, depth+1)
+            else:
+                logging.debug(f'{current_path}: max depth reached.')
 
         except Exception as e:
             logging.debug(f'{current_path} : exception occurred analyzing current_path {e}')

@@ -22,4 +22,7 @@ if __name__ == "__main__":
     utils.utils.setup_logger('.', 'NMR_meta_logger', get_logging_level(p.opt.log_level))
 
     conn = IrodsConnector(irods_env_file=p.opt.irods_env_file, irods_auth_file=p.opt.irods_auth_file)
-    NMR_meta_binder(p.opt.nmr_data_local_folder, p.opt.nmr_data_rdms_folder, p.opt.nmr_csv_name, conn).execute()
+    
+    
+    
+    NMR_meta_binder(p.opt.nmr_data_local_folder, p.opt.nmr_data_rdms_folder, p.opt.nmr_csv_name, p.opt.max_depth, conn).execute()

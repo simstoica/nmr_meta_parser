@@ -44,3 +44,7 @@ class Nmr_meta_cl_parser(BaseParser):
 
         self.parser.add_argument("--nmr-csv-name", type=str, required=False, default='',
                                  help='File name of the summary CSV with metadta')
+
+        self.parser.add_argument("--max-depth", type=int, required=False, default=4,
+                                 help='Max depth level of the experiment folder with respect" \
+                                 " to the requested folder.')
