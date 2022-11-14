@@ -104,3 +104,8 @@ class Varian(experiment_parser.Experiment_parser):
 
     def _from_procparams(self, field_name):
         return self._procparams[field_name]['values'][0]
+
+    @staticmethod
+    def is_experiment(experiment_folder):
+        procpar_path = os.path.abspath(os.path.join(experiment_folder, "procpar"))
+        return os.path.isfile(procpar_path)

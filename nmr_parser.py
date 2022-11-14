@@ -11,3 +11,8 @@ def parse(experiment_folder):
         return params.parse_params()
     if params := parsers.bruker.Bruker(experiment_folder):
         return params.parse_params()
+
+
+def is_experiment(experiment_folder):
+    return parsers.bruker.Bruker.is_experiment(experiment_folder) or \
+        parsers.varian.Varian.is_experiment(experiment_folder)

@@ -16,27 +16,37 @@ SYSTEM_NMR_META_VERSION = 'sysmdt_nmr_meta_version'
 
 class NMR_meta_binder():
 
-    def __init__(self, path_to_local_folder, path_to_rdms_folder, path_to_csv_file, irods_connector):
+    def __init__(self, path_to_local_folder, path_to_rdms_folder, path_to_csv_file, max_depth, irods_connector):
         self.path_to_local_folder = os.path.expanduser(path_to_local_folder)
         self.path_to_rdms_folder = path_to_rdms_folder
         self.irods_connector = irods_connector
         self.path_to_csv_file = path_to_csv_file
+        self.max_depth = max_depth
+        logging.debug(f'path_to_local_folder : {path_to_local_folder}')
+        logging.debug(f'path_to_rdms_folder  : {path_to_rdms_folder}')
+        logging.debug(f'path_to_csv_file     : {path_to_csv_file}')
         self.all_metadata = []
         self.keys = []
 
     def execute(self):
-        associated_groups = get_subdirectories(self.path_to_local_folder)
-        for associated_group in associated_groups:
-            logging.info(f'Scanning `{associated_group}')
-            personal_folders = get_subdirectories(associated_group)
-
-            for folder in personal_folders:
-                logging.info(f'Scanning `{folder}')
-                experiments_list = get_subdirectories(folder)
-                for experiment in experiments_list:
-                    self.bind_metadata(experiment)
-
+        self.scan_directory_and_subfolders(self.path_to_local_folder, depth=0)
         self.print_csv_if_needed()
+
+    def scan_directory_and_subfolders(self, current_path, depth):
+        try:
+            if nmr_parser.is_experiment(current_path):
+                logging.info(f'{current_path} : attempting to bind metadata')
+                self.bind_metadata(current_path)
+            elif depth < self.max_depth:
+                logging.info(f'{current_path} : scanning subfolders')
+                next_level_subfolders = get_subdirectories(current_path)
+                for next_level_dir in next_level_subfolders:
+                    self.scan_directory_and_subfolders(next_level_dir, depth+1)
+            else:
+                logging.debug(f'{current_path}: max depth reached.')
+
+        except Exception as e:
+            logging.debug(f'{current_path} : exception occurred analyzing current_path {e}')
 
     def bind_metadata(self, experiment_folder):
         logging.info(f'Analyzing `{experiment_folder}`')
@@ -76,7 +86,7 @@ class NMR_meta_binder():
                 value = self._get_path_on_irods_server(value)
             if not value:
                 value = 'NA'
-            prepared_meta.append([f'{key}', f'{value}', f'{unit}'])
+            prepared_meta.append([f'nmr::{key}', f'{value}', f'{unit}'])
         return prepared_meta
 
     def _get_path_on_irods_server(self, experiment_folder):
@@ -137,7 +147,11 @@ class NMR_meta_binder():
 
 
 def get_subdirectories(path):
-    return (f.path for f in os.scandir(path) if f.is_dir())
+    try:
+        return (f.path for f in os.scandir(path) if f.is_dir())
+    except PermissionError:
+        logging.warning(f'Directory `{path}` could not be scanned')
+        return []
 
 
 def get_all_experiment_folders(path):

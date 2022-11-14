@@ -132,7 +132,7 @@ def setup_logger(logdir, appname, level=None):
     if level == logging.DEBUG:
         log_format = '[%(asctime)s] {%(filename)s:%(lineno)d} %(levelname)s - %(message)s'
     else:
-        log_format = '[%(asctime)s] %(levelname)s - %(message)s'
+        log_format = '[%(asctime)s] %(levelname)10s - %(message)s'
     
     handlers = [
         logging.handlers.RotatingFileHandler(logfile, 'a', 500000, 4),

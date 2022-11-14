@@ -11,6 +11,7 @@ from parsers import experiment_parser
 
 class Bruker(experiment_parser.Experiment_parser):
     acqus = None
+    acqus_file_names = ["acqus", "acqu2s", "acqu3s", "acqu4s"]
 
     def __init__(self, experiment_folder):
         self._experiment_folder = experiment_folder
@@ -77,11 +78,19 @@ class Bruker(experiment_parser.Experiment_parser):
             ['Center_1', center_1, 'ppm'],
             ['Center_2', center_2, 'ppm']
         ]
-        
+
     def parse_parameter_files(self):
         acqus_files = []
-        for f in ["acqus", "acqu2s", "acqu3s", "acqu4s"]:
+        for f in self.acqus_file_names:
             fp = os.path.join(self._experiment_folder, f)
             if os.path.isfile(fp):
                 acqus_files.append(['Parameter_file', str(fp), ''])
         return acqus_files
+
+    @staticmethod
+    def is_experiment(experiment_folder):
+        for f in Bruker.acqus_file_names:
+            fp = os.path.join(experiment_folder, f)
+            if os.path.isfile(fp):
+                return True
+        return False
