@@ -38,6 +38,11 @@ class NMR_meta_binder():
                 logging.info(f'{current_path} : attempting to bind metadata')
                 self.bind_metadata(current_path)
             elif depth < self.max_depth:
+                current_folder_on_irods = self._get_path_on_irods_server(current_path)
+                if not self.irods_connector.collection_exists(current_folder_on_irods):
+                    logging.info(f'Skipping {current_path}. Corresponding RDMS folder does not exist!')
+                    return 
+                
                 logging.info(f'{current_path} : scanning subfolders')
                 next_level_subfolders = get_subdirectories(current_path)
                 for next_level_dir in next_level_subfolders:
