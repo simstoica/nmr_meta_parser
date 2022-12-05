@@ -39,12 +39,12 @@ class Bruker(experiment_parser.Experiment_parser):
 
     def parse_experiment_information(self):
         return [
-            ["Machine", self.acqus['acqus']['INSTRUM'], 'microseconds [\u03BCs]'],
+            ["Machine", self.acqus['acqus']['INSTRUM'], ''],
             ['Probe_head', self.acqus['acqus']['PROBHD'], ''],
             ['Number_of_scans', self.acqus['acqus']['NS'], ''],
             ['Solvent', self.acqus['acqus']['SOLVENT'].lower(), ''],
             ['Pulse_sequence', self.acqus['acqus']['PULPROG'], ''],
-            ['Pulse_width', to_n_digits_float_string(self.acqus['acqus']['P'][1], n=1), ''],
+            ['Pulse_width', to_n_digits_float_string(self.acqus['acqus']['P'][1], n=1), 'microseconds [\u03BCs]'],
             ['Temperature', int(self.acqus['acqus']['TE']), 'Kelvin [K]'],
             ['Relaxation_delay', self.acqus['acqus']['D'][1], 'seconds [s]']
         ]
