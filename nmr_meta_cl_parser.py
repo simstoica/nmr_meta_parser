@@ -35,7 +35,7 @@ class Nmr_meta_cl_parser(BaseClParser):
         self.parser.add_argument("--nmr-data-local-folder", type=str, required=True, default=os.getcwd(),
                                  help='Local path to the folder with the organized nmr data')
 
-        self.parser.add_argument("--nmr-data-rdms-folder", type=str, required=True,
+        self.parser.add_argument("--nmr-data-rdms-folder", type=str, required=False, default='',
                                  help='Path on the rdms with the organized nmr data')
 
         self.parser.add_argument("--log-level", type=str, required=False, default='info',
@@ -51,5 +51,5 @@ class Nmr_meta_cl_parser(BaseClParser):
 
         self.parser.add_argument("--analyse-localy", type=str, required=False, default='n',
                                  help='Use to investigate the metadata on the local folder.'
-                                 'If set to y, the system will only analyse the metadata locally without looking at '
+                                 'If set to y, the system will only analyse the metadata locally without looking at ' 
                                  'any irods environment')

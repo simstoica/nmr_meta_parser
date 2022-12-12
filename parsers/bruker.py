@@ -36,6 +36,9 @@ class Bruker(experiment_parser.Experiment_parser):
             ["Date", date_exp.date(), ''],
             ["Time", date_exp.time(), '']
         ]
+        
+    def _get_acuisition_time(self):
+        return float(self.acqus['acqus']['TD'])/(2*float(self.acqus['acqus']['SW_h']))
 
     def parse_experiment_information(self):
         return [
@@ -46,7 +49,8 @@ class Bruker(experiment_parser.Experiment_parser):
             ['Pulse_sequence', self.acqus['acqus']['PULPROG'], ''],
             ['Pulse_width', to_n_digits_float_string(self.acqus['acqus']['P'][1], n=1), 'microseconds [\u03BCs]'],
             ['Temperature', int(self.acqus['acqus']['TE']), 'Kelvin [K]'],
-            ['Relaxation_delay', self.acqus['acqus']['D'][1], 'seconds [s]']
+            ['Relaxation_delay', self.acqus['acqus']['D'][1], 'seconds [s]'],
+            ['Acquisition_time', to_n_digits_float_string(self._get_acuisition_time(), n=2), 'seconds [s]']
         ]
 
     def nuclea_information(self):
