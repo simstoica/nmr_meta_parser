@@ -7,7 +7,7 @@ import argparse
 import os
 
 
-class BaseParser():
+class BaseClParser():
     def __init__(self):
         self.parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
@@ -19,7 +19,7 @@ class BaseParser():
             self.opt.irods_auth_file = os.path.expanduser(self.opt.irods_auth_file)
 
 
-class Nmr_meta_cl_parser(BaseParser):
+class Nmr_meta_cl_parser(BaseClParser):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.parser.add_argument("--irods-env-file", type=str, required=False,
