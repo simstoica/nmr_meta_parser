@@ -48,3 +48,8 @@ class Nmr_meta_cl_parser(BaseClParser):
         self.parser.add_argument("--max-depth", type=int, required=False, default=4,
                                  help='Max depth level of the experiment folder with respect" \
                                  " to the requested folder.')
+
+        self.parser.add_argument("--analyse-localy", type=str, required=False, default='n',
+                                 help='Use to investigate the metadata on the local folder.'
+                                 'If set to y, the system will only analyse the metadata locally without looking at '
+                                 'any irods environment')

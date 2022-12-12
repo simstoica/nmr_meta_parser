@@ -4,8 +4,8 @@ import datetime
 import logging
 import os
 
+import irods.exception
 import irods.path
-import irods.session
 
 import nmr_parser
 
@@ -41,8 +41,8 @@ class NMR_meta_binder():
                 current_folder_on_irods = self._get_path_on_irods_server(current_path)
                 if not self.irods_connector.collection_exists(current_folder_on_irods):
                     logging.info(f'Skipping {current_path}. Corresponding RDMS folder does not exist!')
-                    return 
-                
+                    return
+
                 logging.info(f'{current_path} : scanning subfolders')
                 next_level_subfolders = get_subdirectories(current_path)
                 for next_level_dir in next_level_subfolders:
@@ -58,11 +58,12 @@ class NMR_meta_binder():
         experiment_folder_on_irods = self._get_path_on_irods_server(experiment_folder)
         logging.info(f'\t Corresponding iRODS folder: `{experiment_folder_on_irods}`')
 
-        if not self.irods_connector.session.collections.exists(experiment_folder_on_irods):
+        try:
+            irods_collection_of_experiment = self.irods_connector.get_collection(experiment_folder_on_irods)
+        except irods.exception.CollectionDoesNotExist:
             logging.warning(f'\t\t iRODS collection does not exist `{experiment_folder_on_irods}`')
             return
-
-        irods_collection_of_experiment = self.irods_connector.session.collections.get(experiment_folder_on_irods)
+        
         if irods_collection_of_experiment.metadata.get_all(SYSTEM_NMR_META):
             logging.warning(f'\t\tiRODS collection `{experiment_folder_on_irods}` already has nmr metadata')
             return
@@ -73,7 +74,8 @@ class NMR_meta_binder():
             return
 
         prepared_metadata = self._prepare_metadata(metadata)
-        logging.debug(f'\t\tPrepared metadata {prepared_metadata}')
+        separator = '\n\t\t'
+        logging.debug(f"\t\tPrepared metadata { separator.join( [f'A: {a:25} V: {v:20}: U: {u}' for a,v,u in prepared_metadata ] ) }")
         if not self.irods_connector.addMultipleMetadata([irods_collection_of_experiment], prepared_metadata):
             logging.error(f'Could not attach metadata to `{experiment_folder_on_irods}`')
 
