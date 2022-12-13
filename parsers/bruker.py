@@ -36,7 +36,7 @@ class Bruker(experiment_parser.Experiment_parser):
             ["Date", date_exp.date(), ''],
             ["Time", date_exp.time(), '']
         ]
-        
+
     def _get_acuisition_time(self):
         return float(self.acqus['acqus']['TD'])/(2*float(self.acqus['acqus']['SW_h']))
 
