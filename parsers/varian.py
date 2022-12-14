@@ -48,6 +48,7 @@ class Varian(experiment_parser.Experiment_parser):
             ['Pulse_width', to_n_digits_float_string(self._from_procparams('pw'), n=1), 'microseconds [\u03BCs]'],
             ['Temperature', round(to_kelvin(float(self._from_procparams('temp')))), 'Kelvin [K]'],
             ['Relaxation_delay', self._from_procparams('d1'), 'seconds [s]'],
+            ['Acquisition_time', self._from_procparams('at'), 'seconds [s]'],
             ['Journal_ID', journal_id, '']
         ]
 
