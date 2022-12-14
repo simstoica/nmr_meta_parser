@@ -46,8 +46,8 @@ class Nmr_meta_cl_parser(BaseClParser):
                                  help='File name of the summary CSV with metadta')
 
         self.parser.add_argument("--max-depth", type=int, required=False, default=4,
-                                 help='Max depth level of the experiment folder with respect" \
-                                 " to the requested folder.')
+                                 help='Max depth level of the experiment folder with respect'
+                                 ' to the requested folder.')
 
         self.parser.add_argument("--analyse-localy", type=str, required=False, default='n',
                                  help='Use to investigate the metadata on the local folder.'

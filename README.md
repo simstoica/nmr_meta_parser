@@ -56,6 +56,11 @@ optional arguments:
                         Level of information to be given in the logs (default: info)
   --nmr-csv-name NMR_CSV_NAME
                         File name of the summary CSV with metadta (default: )
+  --max-depth MAX_DEPTH
+                        Max depth level of the experiment folder with respect to the requested folder. (default: 4)
+  --analyse-localy ANALYSE_LOCALY
+                        Use to investigate the metadata on the local folder.If set to y, the system will only analyse the
+                        metadata locally without looking at any irods environment (default: n)
 
 ```
 When both the `--irods-env-file` and `--irods-auth-file` are empty, the script will automatically select the current active irods connection. Alternatively, one can provide a corresponding pair `--irods-env-file` and `--irods-auth-file` 
@@ -80,3 +85,11 @@ python3 nmr_meta_main.py --nmr-data-local-folder=./data --nmr-data-rdms-folder=/
 the tool searches the local folder `./data` for nmr experiments. For every experiment found, it checks whether the corresponding data is already on the RDMS system and that the metadata has not yet been attached.
 
 if the metadata has not yet been attached on RDMS, the metadata is extracted from the local experiment folder and attached to the corresponding RDMS experiment folder. 
+
+The `--max-depth` parameter can be provided as a paremeter to accelerate the search of the local folder. The depth search for experiments stops when the `max_depth` has been reached.
+
+When investigating the experiments on the local folder and their metadata, or in the absence of and RDMS setup, one can use the `--analyse-localy=y`. This option allows exploring the local folder, and eventually, if requested, prints the collected metadata to the specified CSV file.
+
+```
+python nmr_meta_main.py --analyse-localy=y --nmr-data-local-folder=./data --log-level=info --nmr-csv-name=./data/nmr_metadata_v20221214T1200.csv
+```
