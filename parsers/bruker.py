@@ -3,8 +3,11 @@ from datetime import datetime
 import os
 import nmrglue as ng
 
-from parse_utils import get_content_dot_email_file, get_content_dot_gnumber_file, to_n_digits_float_string
+from parse_utils import get_content_dot_email_file
+from parse_utils import get_content_dot_gnumber_file
 from parse_utils import get_2nd_nucleus_based_on_experiment_type, isotope_number_first
+from parse_utils import to_n_digits_float_string
+from parse_utils import to_celsius
 
 from parsers import experiment_parser
 
@@ -48,7 +51,8 @@ class Bruker(experiment_parser.Experiment_parser):
             ['Solvent', self.acqus['acqus']['SOLVENT'].lower(), ''],
             ['Pulse_sequence', self.acqus['acqus']['PULPROG'], ''],
             ['Pulse_width', to_n_digits_float_string(self.acqus['acqus']['P'][1], n=1), 'microseconds [\u03BCs]'],
-            ['Temperature', int(self.acqus['acqus']['TE']), 'Kelvin [K]'],
+            ['Temperature', to_n_digits_float_string(int(self.acqus['acqus']['TE']), n=1), 'Kelvin [K]'],
+            ['Temperature', to_n_digits_float_string(to_celsius(int(self.acqus['acqus']['TE'])), n=1), 'Celsius [\u00B0]'],
             ['Relaxation_delay', self.acqus['acqus']['D'][1], 'seconds [s]'],
             ['Acquisition_time', to_n_digits_float_string(self._get_acuisition_time(), n=2), 'seconds [s]']
         ]

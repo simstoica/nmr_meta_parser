@@ -2,3 +2,4 @@
 /NMR_Formats/**
 doc/**
 *.pyc
+.sourcery.yaml
