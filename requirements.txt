@@ -1,2 +1,2 @@
 nmrglue==0.9
-python-irodsclient==1.1.5
+python-irodsclient==1.1.6
