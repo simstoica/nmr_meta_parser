@@ -51,4 +51,5 @@ def get_2nd_nucleus_based_on_experiment_type(experiment_type, n_1, n_2):
 
 
 def isotope_number_first(nucleus):
-    return m[2] + m[1] if (m := re.match('([a-z,A-Z]*)([1-9]*)$', nucleus)) else nucleus
+    m = re.match('([a-z,A-Z]*)([1-9]*)$', nucleus)
+    return m[2] + m[1] if (m) else nucleus

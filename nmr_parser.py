@@ -7,9 +7,14 @@ NMR_PARSER_VERSION = '1.0'
 
 
 def parse(experiment_folder):
-    if params := parsers.varian.Varian(experiment_folder):
+    # try Varian   
+    params = parsers.varian.Varian(experiment_folder)
+    if params:
         return params.parse_params()
-    if params := parsers.bruker.Bruker(experiment_folder):
+    
+    # try Bruker
+    params = parsers.bruker.Bruker(experiment_folder)
+    if params:
         return params.parse_params()
 
 
