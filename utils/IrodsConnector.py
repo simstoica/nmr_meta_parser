@@ -1260,13 +1260,13 @@ class IrodsConnector():
             except irods.meta.BadAVUOperationValue:
                 print(f"{RED}INFO ADD MULTIPLE META: bad metadata value{DEFAULT}")
                 return False
+            except irods.exception.CAT_NO_ACCESS_PERMISSION as cnap:
+                print("{RED}ERROR UPDATE META: no permissions Error: {e}{DEFAULT}")
+                raise cnap
             except Exception as e:
                 print(f'items {avus}')
-                print(f"{RED}INFO ADD MULTIPLE META: unexpected error{DEFAULT}")
+                print(f"{RED}INFO ADD MULTIPLE META: unexpected error : {e} {DEFAULT}")
                 return False
-            except irods.exception.CAT_NO_ACCESS_PERMISSION as cnap:
-                print("ERROR UPDATE META: no permissions")
-                raise cnap
 
     def updateMetadata(self, items, key, value, units=None):
         """
