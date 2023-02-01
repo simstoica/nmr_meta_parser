@@ -1258,14 +1258,16 @@ class IrodsConnector():
                 item.metadata.apply_atomic_operations(*list_of_tags)
                 return True
             except irods.meta.BadAVUOperationValue:
-                print(f"{RED}INFO ADD MULTIPLE META: bad metadata value{DEFAULT}")
+                logging.debug(f'items {avus}')
+                logging.error(f"{RED}ERROR ADD MULTIPLE META: bad metadata value{DEFAULT}")
                 return False
             except irods.exception.CAT_NO_ACCESS_PERMISSION as cnap:
-                print("{RED}ERROR UPDATE META: no permissions Error: {e}{DEFAULT}")
+                logging.debug(f'items {avus}')
+                logging.error(f"{RED}ERROR ADD MULTIPLE META: no permissions {e} {DEFAULT}")
                 raise cnap
             except Exception as e:
-                print(f'items {avus}')
-                print(f"{RED}INFO ADD MULTIPLE META: unexpected error : {e} {DEFAULT}")
+                logging.debug(f'items {avus}')
+                logging.error(f"{RED}ERROR ADD MULTIPLE META: unexpected error : {e} {DEFAULT}")
                 return False
 
     def updateMetadata(self, items, key, value, units=None):
