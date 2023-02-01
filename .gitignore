@@ -3,3 +3,5 @@
 doc/**
 *.pyc
 .sourcery.yaml
+*.log
+*.log.*

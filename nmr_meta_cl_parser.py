@@ -5,6 +5,11 @@
 # *************************
 import argparse
 import os
+import pathlib
+
+
+def get_default_location_for_log_files():
+    return pathlib.Path(__file__).parent.resolve()
 
 
 class BaseClParser():
@@ -51,5 +56,10 @@ class Nmr_meta_cl_parser(BaseClParser):
 
         self.parser.add_argument("--analyse-localy", type=str, required=False, default='n',
                                  help='Use to investigate the metadata on the local folder.'
-                                 'If set to y, the system will only analyse the metadata locally without looking at ' 
+                                 'If set to y, the system will only analyse the metadata locally without looking at '
                                  'any irods environment')
+
+        self.parser.add_argument("--log-files-location", type=str, required=False, default=get_default_location_for_log_files(),
+                                 help="Location on disk where the log files will be stored. If no value is specifed, "
+                                 "the log files will be written in the main script folder."
+                                 "Warning: the location must exist and will not be created")
