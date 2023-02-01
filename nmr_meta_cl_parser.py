@@ -59,6 +59,7 @@ class Nmr_meta_cl_parser(BaseClParser):
                                  'If set to y, the system will only analyse the metadata locally without looking at '
                                  'any irods environment')
 
-        self.parser.add_argument("--log-file-location", type=str, required=False, default=get_default_location_for_log_files(),
+        self.parser.add_argument("--log-files-location", type=str, required=False, default=get_default_location_for_log_files(),
                                  help="Location on disk where the log files will be stored. If no value is specifed, "
-                                 "the log files will be written in the main script folder.")
+                                 "the log files will be written in the main script folder."
+                                 "Warning: the location must exist and will not be created")
