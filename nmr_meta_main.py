@@ -27,7 +27,7 @@ if __name__ == "__main__":
     p = Nmr_meta_cl_parser()
     p.parse()
 
-    utils.utils.setup_logger('.', 'NMR_meta_logger', get_logging_level(p.opt.log_level))
+    utils.utils.setup_logger(p.opt.log_files_location, 'NMR_meta_logger', get_logging_level(p.opt.log_level))
 
     conn = get_connector(p.opt)
 
