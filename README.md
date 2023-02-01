@@ -61,6 +61,12 @@ optional arguments:
   --analyse-localy ANALYSE_LOCALY
                         Use to investigate the metadata on the local folder.If set to y, the system will only analyse the
                         metadata locally without looking at any irods environment (default: n)
+  --log-files-location LOG_FILES_LOCATION
+                        Location on disk where the log files will be stored.
+                        If no value is specifed, the log files will be written
+                        in the main script folder.Warning: the location must
+                        exist and will not be created (default:
+                        script directory)
 
 ```
 When both the `--irods-env-file` and `--irods-auth-file` are empty, the script will automatically select the current active irods connection. Alternatively, one can provide a corresponding pair `--irods-env-file` and `--irods-auth-file` 
