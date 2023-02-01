@@ -128,12 +128,12 @@ def setup_logger(logdir, appname, level=None):
     logfile = logdir.joinpath(f'{appname}.log')
     if not level:
         level = logging.INFO
-        
+
     if level == logging.DEBUG:
         log_format = '[%(asctime)s] {%(filename)s:%(lineno)d} %(levelname)s - %(message)s'
     else:
         log_format = '[%(asctime)s] %(levelname)10s - %(message)s'
-    
+
     handlers = [
         logging.handlers.RotatingFileHandler(logfile, 'a', 500000, 4),
         logging.StreamHandler(sys.stdout),
@@ -142,13 +142,17 @@ def setup_logger(logdir, appname, level=None):
         format=log_format, level=level, handlers=handlers)
     # Indicate start of a new session
     with open(logfile, 'a', encoding='utf-8') as logfd:
-        logfd.write('\n\n')
-        underscores = f'{"_"*50}\n'
-        logfd.write(underscores)
-        logfd.write(underscores)
-        logfd.write(f'\t\t{datetime.datetime.now().isoformat()}\n')
-        logfd.write(underscores)
-        logfd.write(underscores)
+        _write_logger_header_to_log_file(logfd)
+
+
+def _write_logger_header_to_log_file(logfd):
+    logfd.write('\n\n')
+    underscores = f'{"_"*50}\n'
+    logfd.write(underscores)
+    logfd.write(underscores)
+    logfd.write(f'\t\t{datetime.datetime.now().isoformat()}\n')
+    logfd.write(underscores)
+    logfd.write(underscores)
 
 
 class PurePath(str):
