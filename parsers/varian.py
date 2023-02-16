@@ -47,9 +47,9 @@ class Varian(experiment_parser.Experiment_parser):
             ['Pulse_sequence', self._from_procparams('seqfil'), ''],
             ['Pulse_width', to_n_digits_float_string(self._from_procparams('pw'), n=1), 'microseconds [\u03BCs]'],
             ['Temperature', to_n_digits_float_string(to_kelvin(float(self._from_procparams('temp'))), n=1), 'Kelvin [K]'],
-            ['Temperature', to_n_digits_float_string(float(self._from_procparams('temp')), n=1), 'Celsius [\u00B0]'],
+            ['Temperature', to_n_digits_float_string(self._from_procparams('temp'), n=1), 'Celsius [\u00B0]'],
             ['Relaxation_delay', self._from_procparams('d1'), 'seconds [s]'],
-            ['Acquisition_time', self._from_procparams('at'), 'seconds [s]'],
+            ['Acquisition_time', to_n_digits_float_string(self._from_procparams('at'), n=1), 'seconds [s]'],
             ['Journal_ID', journal_id, '']
         ]
 
