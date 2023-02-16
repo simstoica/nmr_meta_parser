@@ -54,7 +54,7 @@ class Bruker(experiment_parser.Experiment_parser):
             ['Temperature', to_n_digits_float_string(int(self.acqus['acqus']['TE']), n=1), 'Kelvin [K]'],
             ['Temperature', to_n_digits_float_string(to_celsius(int(self.acqus['acqus']['TE'])), n=1), 'Celsius [\u00B0]'],
             ['Relaxation_delay', self.acqus['acqus']['D'][1], 'seconds [s]'],
-            ['Acquisition_time', to_n_digits_float_string(self._get_acuisition_time(), n=2), 'seconds [s]']
+            ['Acquisition_time', to_n_digits_float_string(self._get_acuisition_time(), n=1), 'seconds [s]']
         ]
 
     def nuclea_information(self):
