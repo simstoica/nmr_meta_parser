@@ -1,7 +1,7 @@
 import parsers.varian
 import parsers.bruker
 
-NMR_PARSER_VERSION = '1.0'
+NMR_PARSER_VERSION = '1.1'
 
 # TODO: discover parsers
 
