@@ -41,6 +41,7 @@ class Varian(experiment_parser.Experiment_parser):
 
         return [
             ["Machine", self._from_procparams('console'), ''],
+            ["ID", self._from_procparams('go_id', 'NA'), ''],
             ["Probe_head", self._from_procparams('probe_'), ''],
             ['Number_of_scans', self._from_procparams('ct'), ''],
             ['Solvent', self._from_procparams('solvent').lower(), ''],
@@ -104,8 +105,11 @@ class Varian(experiment_parser.Experiment_parser):
             ['Parameter_file', str(os.path.join(self._experiment_folder, 'procpar')), '']
         ]
 
-    def _from_procparams(self, field_name):
-        return self._procparams[field_name]['values'][0]
+    def _from_procparams(self, field_name, default=''):
+        try:
+            return self._procparams[field_name]['values'][0]
+        except KeyError:
+            return default
 
     @staticmethod
     def is_experiment(experiment_folder):
