@@ -41,6 +41,7 @@ class Varian(experiment_parser.Experiment_parser):
 
         return [
             ["Machine", self._from_procparams('console'), ''],
+            ["ID", self._from_procparams('go_id'), ''],
             ["Probe_head", self._from_procparams('probe_'), ''],
             ['Number_of_scans', self._from_procparams('ct'), ''],
             ['Solvent', self._from_procparams('solvent').lower(), ''],
